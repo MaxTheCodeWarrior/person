@@ -3,6 +3,7 @@ package telran.java51.person.model;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -29,7 +30,7 @@ public class Person implements Serializable {
 	LocalDate birthDate;
 	
 	@Setter
-	@Embedded
+	// @Embedded not need cos address has annotation @Embeddable
 	Address address;
 	
 	

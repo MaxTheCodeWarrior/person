@@ -1,7 +1,5 @@
 package telran.java51.person.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import telran.java51.person.dto.AddressDto;
+import telran.java51.person.dto.ChildDto;
 import telran.java51.person.dto.CityPopulationDto;
+import telran.java51.person.dto.EmployeeDto;
 import telran.java51.person.dto.PersonDto;
 import telran.java51.person.service.PersonService;
 
@@ -24,7 +24,7 @@ public class PersonController {
 	final PersonService personService;
 
 	@PostMapping
-	public Boolean addPesron(@RequestBody PersonDto personDto) {
+	public Boolean addPerson(@RequestBody PersonDto personDto) {
 		return personService.addPerson(personDto);
 	}
 
@@ -34,12 +34,12 @@ public class PersonController {
 	}
 
 	@GetMapping("/city/{city}")
-	public List<PersonDto> findPersonsByCity(@PathVariable String city) {
+	public Iterable<PersonDto> findPersonsByCity(@PathVariable String city) {
 		return personService.findPersonsByCity(city);
 	}
 
 	@GetMapping("/ages/{from}/{to}")
-	public List<PersonDto> findPersonsByAges(@PathVariable Integer from, @PathVariable Integer to) {
+	public Iterable<PersonDto> findPersonsByAges(@PathVariable Integer from, @PathVariable Integer to) {
 		return personService.findPersonsByAges(from, to);
 	}
 
@@ -49,12 +49,12 @@ public class PersonController {
 	}
 
 	@GetMapping("/population/city")
-	public List<CityPopulationDto> getCitiesPopulation(){
+	public Iterable<CityPopulationDto> getCitiesPopulation() {
 		return personService.getCitiesPopulation();
 	}
-	
+
 	@GetMapping("/name/{name}")
-	public List<PersonDto> findPersonByName(@PathVariable String name) {
+	public Iterable<PersonDto> findPersonsByName(@PathVariable String name) {
 		return personService.findPersonsByName(name);
 	}
 
@@ -68,4 +68,16 @@ public class PersonController {
 		return personService.deletePersonById(id);
 	}
 
+	@GetMapping("/children")
+	public Iterable<ChildDto> findAllChildren() {
+		return personService.findAllChildren();
+	}
+	
+	@GetMapping("/salary/{from}/{to}")
+	public Iterable<EmployeeDto> findEmployeesBySalary(@PathVariable Integer from, @PathVariable Integer to) {
+		return personService.findEmployeesBySalary(from,to);
+	}
+	
+	
+	
 }

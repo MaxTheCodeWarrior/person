@@ -15,11 +15,11 @@ public class Child extends Person {
 
 	private static final long serialVersionUID = 132784094816046692L;
 
-	String kindergarden;
+	String kindergarten;
 
-	public Child(Integer id, String name, LocalDate birthDate, Address address, String kindergarden) {
+	public Child(Integer id, String name, LocalDate birthDate, Address address, String kindergarten) {
 		super(id, name, birthDate, address);
-		this.kindergarden = kindergarden;
+		this.kindergarten = kindergarten;
 	}
 
 }

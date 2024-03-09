@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import lombok.RequiredArgsConstructor;
 import telran.java51.person.dto.AddressDto;
 import telran.java51.person.dto.ChildDto;
@@ -21,11 +24,27 @@ import telran.java51.person.service.PersonService;
 @RequestMapping("/person")
 @RequiredArgsConstructor
 public class PersonController {
+
 	final PersonService personService;
+	final ObjectMapper objectMapper;
 
 	@PostMapping
-	public Boolean addPerson(@RequestBody PersonDto personDto) {
-		return personService.addPerson(personDto);
+	public Boolean addPerson(@RequestBody String requestBody) {
+		try {
+			if (requestBody.contains("type")) {
+				return personService.addPerson(objectMapper.readValue(requestBody, PersonDto.class));
+			} else {
+				ObjectNode jsonNode = objectMapper.readValue(requestBody, ObjectNode.class);
+				jsonNode.put("type", "person");
+				String modifiedRequestBody = objectMapper.writeValueAsString(jsonNode);
+				PersonDto personDto = objectMapper.readValue(modifiedRequestBody, PersonDto.class);
+				return personService.addPerson(personDto);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@GetMapping("/{id}")
@@ -72,12 +91,10 @@ public class PersonController {
 	public Iterable<ChildDto> findAllChildren() {
 		return personService.findAllChildren();
 	}
-	
+
 	@GetMapping("/salary/{from}/{to}")
 	public Iterable<EmployeeDto> findEmployeesBySalary(@PathVariable Integer from, @PathVariable Integer to) {
-		return personService.findEmployeesBySalary(from,to);
+		return personService.findEmployeesBySalary(from, to);
 	}
-	
-	
-	
+
 }

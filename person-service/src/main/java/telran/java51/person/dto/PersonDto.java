@@ -10,14 +10,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
+
 @JsonTypeInfo(use = Id.NAME, include = As.PROPERTY, property = "type")
-@JsonSubTypes({
-	@Type(name = "child", value = ChildDto.class),
+@JsonSubTypes({ 
+	@Type(name = "child", value = ChildDto.class), 
 	@Type(name = "employee", value = EmployeeDto.class),
 	@Type(name = "person", value = PersonDto.class)
-	
+
 })
 
 @JsonTypeName("person")

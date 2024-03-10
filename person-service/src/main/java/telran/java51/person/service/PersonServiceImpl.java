@@ -123,7 +123,7 @@ public class PersonServiceImpl implements PersonService, CommandLineRunner {
 	@Override
 	public Iterable<ChildDto> findAllChildren() {
 
-		return personRepository.findAllChildren().map(p -> modelMapper.map(p, ChildDto.class))
+		return personRepository.findChildrenBy().map(p -> modelMapper.map(p, ChildDto.class))
 				.collect(Collectors.toList());
 	}
 

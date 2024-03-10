@@ -23,8 +23,8 @@ public interface PersonRepository extends CrudRepository<Person, Integer> {
 
 	Stream<Person> findPersonsByName(String name);
 	
-@Query("SELECT c FROM Child c WHERE TYPE(c) = Child")
-	Stream<Child> findAllChildren();
+	//@Query("SELECT c FROM Child c WHERE TYPE(c) = Child")
+	Stream<Child> findChildrenBy();
 
 	Stream<Employee> findEmployeesBySalaryBetween(Integer from, Integer to);
 
